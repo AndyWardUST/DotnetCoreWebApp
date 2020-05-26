@@ -1,33 +1,54 @@
 # Docker
-# Build a Docker image 
+# Build a Docker image
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- master
+  - master
 
 resources:
-- repo: self
+  - repo: self
 
 variables:
   tag: '$(Build.BuildId)'
-  imageRepository: 'pocnetcore'
+  imageRepository: 'ustpoc-docker-local.jfrog.io/pocnetcore'
   dockerFilePath: '**/Dockerfile'
-  vmImageName: 'windows-latest'
+  vmImageName: 'ubuntu-latest'
 
-pool:
-  vmImage: $(vmImageName)
+pool: 'Default'
 
 stages:
-  - stage: Build
-    displayName: Build Stage
+  - stage: Check
+    displayName: Check Stage
+    dependsOn: Import
     jobs:
-      - job: Build
-        displayName: Build
+      - job: Check
+        displayName: Sonar Check
         steps:
-          - task: Docker@2
+          - task: SonarCloudPrepare@1
             inputs:
-              repository: $(imageRepository)
-              command: 'build'
-              Dockerfile: '$(dockerfilePath)'
-              tags: '$(tag)'
+              SonarCloud: 'SonarCloud'
+              organization: 'andywardust'
+              scannerMode: 'MSBuild'
+              projectKey: 'AndyWardUST_DotnetCoreWebApp'
+              projectName: 'DotnetCoreWebApp'
+              extraProperties: |
+                # Additional properties that will be passed to the scanner,
+                # Put one key=value per line, example:
+                sonar.organization=andywardust
+          - task: NuGetCommand@2
+            inputs:
+              command: 'restore'
+              restoreSolution: '**/*.sln'
+              feedsToUse: 'config'
+
+          - task: MSBuild@1
+            inputs:
+              solution: '**/*.sln'
+
+          - task: SonarCloudAnalyze@1
+
+          - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: '300'
+
 
