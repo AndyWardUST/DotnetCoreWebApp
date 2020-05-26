@@ -19,7 +19,6 @@ pool: 'Default'
 stages:
   - stage: Check
     displayName: Check Stage
-    dependsOn: Import
     jobs:
       - job: Check
         displayName: Sonar Check
