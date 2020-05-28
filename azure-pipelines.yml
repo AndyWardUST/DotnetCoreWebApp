@@ -24,6 +24,9 @@ stages:
         displayName: Sonar Check
         container: mcr.microsoft.com/dotnet/core/sdk:2.2
         steps:
+          - task: NuGetToolInstaller@1
+            inputs:
+              versionSpec: '4.1.0'
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: 'SonarCloud'
