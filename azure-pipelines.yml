@@ -14,7 +14,7 @@ variables:
   dockerFilePath: '**/Dockerfile'
   vmImageName: 'ubuntu-latest'
 
-pool: 'Default'
+pool: 'Node Pool'
 
 stages:
   - stage: Check
