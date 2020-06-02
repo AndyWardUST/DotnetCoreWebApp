@@ -22,7 +22,7 @@ stages:
     jobs:
       - job: Check
         displayName: Sonar Check
-        container: mcr22:latest
+        container: localhost/mcr22:latest
         steps:
           - task: SonarCloudPrepare@1
             inputs:
