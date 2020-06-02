@@ -36,9 +36,9 @@ stages:
                 # Put one key=value per line, example:
                 sonar.organization=andywardust
 
-          - task: MSBuild@1
+          - task: DotNetCoreCLI@2
             inputs:
-              solution: '**/*.sln'
+              command: 'build'
 
           - task: SonarCloudAnalyze@1
 
