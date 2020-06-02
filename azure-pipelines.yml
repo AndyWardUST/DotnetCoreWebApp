@@ -22,7 +22,7 @@ stages:
     jobs:
       - job: Check
         displayName: Sonar Check
-        container: mcr.microsoft.com/dotnet/core/sdk:2.2
+        container: mcr22
         steps:
           - task: SonarCloudPrepare@1
             inputs:
