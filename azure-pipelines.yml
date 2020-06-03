@@ -8,12 +8,6 @@ trigger:
 resources:
   - repo: self
 
-variables:
-  tag: '$(Build.BuildId)'
-  imageRepository: 'ustpoc-docker-local.jfrog.io/pocnetcore'
-  dockerFilePath: '**/Dockerfile'
-  vmImageName: 'ubuntu-latest'
-
 pool: 'Net 31 Pool'
 
 stages:
@@ -22,7 +16,6 @@ stages:
     jobs:
       - job: Check
         displayName: Sonar Check
-        container: eldarrin/mcr22-with-addons:latest
         steps:
           - task: SonarCloudPrepare@1
             inputs:
