@@ -17,6 +17,10 @@ stages:
       - job: Check
         displayName: Sonar Check
         steps:
+          - task: UseNode@1
+            inputs:
+              version: '12.13.0'
+              
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: 'SonarCloud'
