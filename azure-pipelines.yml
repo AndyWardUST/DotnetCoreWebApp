@@ -8,7 +8,7 @@ trigger:
 resources:
   - repo: self
 
-pool: 'Net 31 Pool'
+pool: 'Net 22 Pool'
 
 stages:
   - stage: Check
